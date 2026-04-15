@@ -1,11 +1,11 @@
 // Product Data
 var products = [
-     {
+    {
         id: 1,
         name: "Wireless Headphones",
         discount: 50,
         originalPrice: 5999,
-        image: "🎧",
+        image: "Img/headphone.jpg",
         rating: 4.5,
         reviews: 245,
         category: "Electronics",
@@ -16,7 +16,7 @@ var products = [
         name: "Smart Watch",
         discount: 50,
         originalPrice: 9999,
-        image: "⌚",
+        image: "Img/Smart Watch.jpg",
         rating: 4.2,
         reviews: 189,
         category: "Electronics",
@@ -27,7 +27,7 @@ var products = [
         name: "Casual T-Shirt",
         discount: 60,
         originalPrice: 1299,
-        image: "👕",
+        image: "Img/T-Shirt.jpg",
         rating: 4.3,
         reviews: 456,
         category: "Clothing",
@@ -38,7 +38,7 @@ var products = [
         name: "Shoes",
         discount: 56,
         originalPrice: 7999,
-        image: "👟",
+        image: "Img/Shoe.jpg",
         rating: 4.6,
         reviews: 678,
         category: "Sports",
@@ -49,7 +49,7 @@ var products = [
         name: "Lamp",
         discount: 50,
         originalPrice: 2999,
-        image: "💡",
+        image: "Img/Lamp.jpg",
         rating: 4.1,
         reviews: 123,
         category: "Home & Garden",
@@ -60,7 +60,7 @@ var products = [
         name: "USB-C Cable",
         discount: 56,
         originalPrice: 899,
-        image: "🔌",
+        image: "Img/Cable.jpg",
         rating: 4.4,
         reviews: 892,
         category: "Electronics",
@@ -71,7 +71,7 @@ var products = [
         name: "Mat",
         discount: 60,
         originalPrice: 1999,
-        image: "🧘",
+        image: "Img/mat.jpg",
         rating: 4.3,
         reviews: 234,
         category: "Sports",
@@ -82,7 +82,7 @@ var products = [
         name: "Mug",
         discount: 56,
         originalPrice: 799,
-        image: "☕",
+        image: "Img/mug.jpg",
         rating: 4.5,
         reviews: 567,
         category: "Home & Garden",
@@ -93,7 +93,7 @@ var products = [
         name: "Speaker",
         discount: 50,
         originalPrice: 4999,
-        image: "🔊",
+        image: "Img/Speaker.jpg",
         rating: 4.4,
         reviews: 345,
         category: "Electronics",
@@ -104,7 +104,7 @@ var products = [
         name: "Bag",
         discount: 60,
         originalPrice: 3999,
-        image: "🎒",
+        image: "Img/Bag.jpg",
         rating: 4.2,
         reviews: 412,
         category: "Clothing",
@@ -115,7 +115,7 @@ var products = [
         name: "Phone Stand",
         discount: 56,
         originalPrice: 699,
-        image: "📱",
+        image: "Img/Phone.jpg",
         rating: 4.3,
         reviews: 198,
         category: "Electronics",
@@ -126,7 +126,7 @@ var products = [
         name: "Sunglasses",
         discount: 60,
         originalPrice: 2499,
-        image: "😎",
+        image: "Img/Glass.jpg",
         rating: 4.4,
         reviews: 523,
         category: "Clothing",
@@ -134,12 +134,11 @@ var products = [
     }
 ];
 
-// Cart
 var cart = [];
 
-// Calculate price from discount
-function getDiscountPrice(originalPrice, discount) {
-    return Math.floor(originalPrice - (originalPrice * discount / 100));
+// Calculate final price
+function getPrice(product) {
+    return Math.floor(product.originalPrice * (100 - product.discount) / 100);
 }
 
 // Render Products
@@ -149,22 +148,18 @@ function renderProducts(productList) {
 
     for (var i = 0; i < productList.length; i++) {
         var product = productList[i];
-        var finalPrice = getDiscountPrice(
-            product.originalPrice,
-            product.discount
-        );
+        var finalPrice = getPrice(product);
 
         var card = document.createElement("div");
         card.className = "product-card";
 
         card.innerHTML =
-            '<div class="product-image">' + product.image + '</div>' +
+            '<div class="product-image">' +
+                '<img src="' + product.image + '" alt="' + product.name + '">' +
+            '</div>' +
             '<div class="product-info">' +
                 '<div class="product-name">' + product.name + '</div>' +
-                '<div class="product-rating">' +
-                    '<span class="stars">⭐ ' + product.rating + '</span>' +
-                    '<span class="reviews">(' + product.reviews + ')</span>' +
-                '</div>' +
+                '<div>⭐ ' + product.rating + ' (' + product.reviews + ')</div>' +
                 '<div class="product-price">₹' + finalPrice + '</div>' +
                 '<div>' +
                     '<span class="original-price">₹' + product.originalPrice + '</span> ' +
@@ -172,101 +167,76 @@ function renderProducts(productList) {
                 '</div>' +
             '</div>';
 
-        card.onclick = (function(productId) {
+        card.onclick = (function(id) {
             return function() {
-                openProductDetail(productId);
+                openProductDetail(id);
             };
         })(product.id);
 
         grid.appendChild(card);
     }
-
-    if (productList.length == 0) {
-        grid.innerHTML = "<h2>No products found</h2>";
-    }
 }
 
 // Search
 function searchProducts() {
-    var searchText = document.querySelector(".search-input").value.toLowerCase();
-    var filteredProducts = [];
+    var text = document.querySelector(".search-input").value.toLowerCase();
 
-    for (var i = 0; i < products.length; i++) {
-        if (products[i].name.toLowerCase().indexOf(searchText) != -1) {
-            filteredProducts.push(products[i]);
-        }
-    }
+    var filtered = products.filter(function(product) {
+        return product.name.toLowerCase().includes(text);
+    });
 
-    renderProducts(filteredProducts);
+    renderProducts(filtered);
 }
 
 // Sort
 function sortProducts() {
-    var sortValue = document.getElementById("sortBy").value;
-    var sortedProducts = [...products];
+    var value = document.getElementById("sortBy").value;
+    var sorted = [...products];
 
-    if (sortValue == "relevance") {
-        renderProducts(products);
-        return;
-    }
-
-    if (sortValue == "price-low") {
-        sortedProducts.sort(function(a, b) {
-            return getDiscountPrice(a.originalPrice, a.discount) -
-                   getDiscountPrice(b.originalPrice, b.discount);
+    if (value == "price-low") {
+        sorted.sort(function(a, b) {
+            return getPrice(a) - getPrice(b);
         });
     }
 
-    if (sortValue == "price-high") {
-        sortedProducts.sort(function(a, b) {
-            return getDiscountPrice(b.originalPrice, b.discount) -
-                   getDiscountPrice(a.originalPrice, a.discount);
+    if (value == "price-high") {
+        sorted.sort(function(a, b) {
+            return getPrice(b) - getPrice(a);
         });
     }
 
-    renderProducts(sortedProducts);
+    renderProducts(sorted);
 }
 
-// Product Detail Popup
+// Product Detail
 function openProductDetail(productId) {
-    var product = null;
+    var product = products.find(p => p.id == productId);
+    var finalPrice = getPrice(product);
 
-    for (var i = 0; i < products.length; i++) {
-        if (products[i].id == productId) {
-            product = products[i];
-            break;
-        }
-    }
+    var detail = document.getElementById("productDetail");
 
-    var finalPrice = getDiscountPrice(
-        product.originalPrice,
-        product.discount
-    );
-
-    var detailBox = document.getElementById("productDetail");
-
-    detailBox.innerHTML =
-        '<div class="detail-image">' + product.image + '</div>' +
-        '<div class="detail-info">' +
+    detail.innerHTML =
+        '<div class="detail-image">' +
+            '<img src="' + product.image + '" alt="' + product.name + '">' +
+        '</div>' +
+        '<div>' +
             '<h2>' + product.name + '</h2>' +
-            '<div class="detail-rating">⭐ ' + product.rating + ' (' + product.reviews + ')</div>' +
+            '<div>⭐ ' + product.rating + ' (' + product.reviews + ')</div>' +
             '<div class="detail-price">₹' + finalPrice + '</div>' +
             '<div>' +
                 '<span class="detail-original-price">₹' + product.originalPrice + '</span> ' +
                 '<span class="detail-discount">' + product.discount + '% OFF</span>' +
             '</div>' +
-            '<div class="detail-description">' + product.description + '</div>' +
-            '<div class="detail-quantity">' +
-                '<label>Quantity:</label>' +
-                '<div class="quantity-control">' +
-                    '<button onclick="decreaseQty()">-</button>' +
-                    '<input type="number" id="qtyInput" value="1" min="1">' +
-                    '<button onclick="increaseQty()">+</button>' +
-                '</div>' +
+            '<p class="detail-description">' + product.description + '</p>' +
+
+            '<label>Quantity:</label>' +
+            '<div class="quantity-control">' +
+                '<button onclick="decreaseQty()">-</button>' +
+                '<input type="number" id="qtyInput" value="1" min="1">' +
+                '<button onclick="increaseQty()">+</button>' +
             '</div>' +
-            '<div class="detail-actions">' +
-                '<button class="detail-add-to-cart" onclick="addPopupToCart(' + product.id + ')">Add to Cart</button>' +
-            '</div>' +
+
+            '<button class="detail-add-to-cart" onclick="addPopupToCart(' + product.id + ')">Add to Cart</button>' +
         '</div>';
 
     document.getElementById("productModal").classList.add("active");
@@ -280,13 +250,12 @@ function increaseQty() {
 
 function decreaseQty() {
     var qty = document.getElementById("qtyInput");
-
     if (parseInt(qty.value) > 1) {
         qty.value = parseInt(qty.value) - 1;
     }
 }
 
-// Add popup cart
+// Add from popup
 function addPopupToCart(productId) {
     var qty = parseInt(document.getElementById("qtyInput").value);
 
@@ -294,56 +263,39 @@ function addPopupToCart(productId) {
         addToCart(productId);
     }
 
-    document.getElementById("productModal").classList.remove("active");
+    closeAllModals();
 }
 
 // Add to cart
 function addToCart(productId) {
-    var found = false;
+    var product = products.find(p => p.id == productId);
+    var finalPrice = getPrice(product);
 
-    for (var i = 0; i < cart.length; i++) {
-        if (cart[i].id == productId) {
-            cart[i].quantity++;
-            found = true;
-            break;
-        }
-    }
+    var existing = cart.find(item => item.id == productId);
 
-    if (!found) {
-        for (var j = 0; j < products.length; j++) {
-            if (products[j].id == productId) {
-                cart.push({
-                    id: products[j].id,
-                    name: products[j].name,
-                    price: getDiscountPrice(
-                        products[j].originalPrice,
-                        products[j].discount
-                    ),
-                    image: products[j].image,
-                    quantity: 1
-                });
-                break;
-            }
-        }
+    if (existing) {
+        existing.quantity++;
+    } else {
+        cart.push({
+            id: product.id,
+            name: product.name,
+            price: finalPrice,
+            image: product.image,
+            quantity: 1
+        });
     }
 
     updateCartCount();
 }
 
-// Remove
+// Remove cart
 function removeFromCart(productId) {
-    for (var i = 0; i < cart.length; i++) {
-        if (cart[i].id == productId) {
-            cart.splice(i, 1);
-            break;
-        }
-    }
-
+    cart = cart.filter(item => item.id != productId);
     updateCartCount();
     openCart();
 }
 
-// Update count
+// Cart count
 function updateCartCount() {
     var total = 0;
 
@@ -361,23 +313,19 @@ function openCart() {
 
     var subtotal = 0;
 
-    if (cart.length == 0) {
-        cartItems.innerHTML = "<p>Your cart is empty</p>";
-    } else {
-        for (var i = 0; i < cart.length; i++) {
-            subtotal += cart[i].price * cart[i].quantity;
+    for (var i = 0; i < cart.length; i++) {
+        subtotal += cart[i].price * cart[i].quantity;
 
-            cartItems.innerHTML +=
-                '<div class="cart-item">' +
-                    '<div class="cart-item-image">' + cart[i].image + '</div>' +
-                    '<div class="cart-item-details">' +
-                        '<div class="cart-item-name">' + cart[i].name + '</div>' +
-                        '<div class="cart-item-price">₹' + cart[i].price + '</div>' +
-                        '<div>Qty: ' + cart[i].quantity + '</div>' +
-                    '</div>' +
-                    '<button class="remove-btn" onclick="removeFromCart(' + cart[i].id + ')">Remove</button>' +
-                '</div>';
-        }
+        cartItems.innerHTML +=
+            '<div class="cart-item">' +
+                '<img src="' + cart[i].image + '" class="cart-img">' +
+                '<div>' +
+                    '<div>' + cart[i].name + '</div>' +
+                    '<div>₹' + cart[i].price + '</div>' +
+                    '<div>Qty: ' + cart[i].quantity + '</div>' +
+                '</div>' +
+                '<button class="remove-btn" onclick="removeFromCart(' + cart[i].id + ')">Remove</button>' +
+            '</div>';
     }
 
     var tax = Math.floor(subtotal * 0.18);
@@ -392,29 +340,23 @@ function openCart() {
     document.getElementById("cartModal").classList.add("active");
 }
 
-// Close modals
+// Close modal
 function closeAllModals() {
     document.getElementById("cartModal").classList.remove("active");
     document.getElementById("productModal").classList.remove("active");
 }
 
 // Load
-window.onload = function () {
+window.onload = function() {
     renderProducts(products);
 
-    document.querySelector(".cart-icon").onclick = openCart;
     document.querySelector(".search-btn").onclick = searchProducts;
+    document.querySelector(".cart-icon").onclick = openCart;
     document.getElementById("sortBy").onchange = sortProducts;
 
-    document.querySelector(".search-input").addEventListener("keyup", function(event) {
-        if (event.key === "Enter") {
-            searchProducts();
-        }
-    });
+    var buttons = document.querySelectorAll(".close-modal");
 
-    var closeButtons = document.querySelectorAll(".close-modal");
-
-    for (var i = 0; i < closeButtons.length; i++) {
-        closeButtons[i].onclick = closeAllModals;
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].onclick = closeAllModals;
     }
 };

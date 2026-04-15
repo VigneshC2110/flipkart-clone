@@ -5,7 +5,7 @@
 }
 
 body {
-    font-family: "Segoe UI", Arial, sans-serif;
+    font-family: Arial, sans-serif;
     background: #f1f3f6;
     color: #222;
 }
@@ -13,14 +13,11 @@ body {
 /* HEADER */
 .header {
     background: #2874f0;
-    padding: 15px 30px;
     color: white;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 15px 30px;
 }
 
 .navbar-container {
-    max-width: 1300px;
-    margin: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -28,105 +25,112 @@ body {
 
 .logo h1 {
     font-size: 28px;
-    font-weight: bold;
 }
 
 .search-bar {
     display: flex;
-    width: 50%;
-    background: white;
-    border-radius: 6px;
-    overflow: hidden;
+    width: 40%;
 }
 
 .search-input {
-    flex: 1;
+    width: 100%;
+    padding: 10px;
     border: none;
-    padding: 12px;
     outline: none;
 }
 
 .search-btn {
+    padding: 10px 15px;
     border: none;
-    background: #ffc107;
-    padding: 12px 18px;
+    background: #ffcc00;
     cursor: pointer;
 }
 
-.cart-icon {
+.nav-icons {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-item {
     cursor: pointer;
-    font-size: 18px;
     position: relative;
 }
 
 .cart-count {
     background: red;
     color: white;
-    border-radius: 50%;
-    padding: 3px 8px;
     font-size: 12px;
-    margin-left: 5px;
+    padding: 2px 6px;
+    border-radius: 50%;
+    position: absolute;
+    top: -8px;
+    right: -12px;
 }
 
 /* HERO */
 .hero-banner {
-    background: linear-gradient(135deg, #5b7fff, #8e44ad);
+    background: linear-gradient(90deg, #4b6cb7, #6a11cb);
     color: white;
     text-align: center;
-    padding: 40px 20px;
-}
-
-.hero-banner h2 {
-    font-size: 38px;
-    margin-bottom: 10px;
+    padding: 40px 0;
 }
 
 /* MAIN */
 .main-container {
-    max-width: 1300px;
-    margin: 20px auto;
-    padding: 0 15px;
+    padding: 20px;
 }
 
+/* SORT */
 .sort-bar {
     margin-bottom: 20px;
 }
 
-.sort-select {
-    padding: 8px 12px;
-    border-radius: 4px;
-}
-
-/* PRODUCTS */
+/* PRODUCT GRID */
 .products-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    gap: 18px;
 }
 
+/* PRODUCT CARD */
 .product-card {
     background: white;
-    border-radius: 10px;
-    padding: 18px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    border-radius: 8px;
+    padding: 15px;
     cursor: pointer;
     transition: 0.3s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
 .product-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 18px rgba(0,0,0,0.15);
 }
 
+/* IMAGE */
 .product-image {
-    font-size: 70px;
     text-align: center;
-    margin-bottom: 15px;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    background: #f7f7f7;
 }
 
+.product-image img {
+    width: 80%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* PRODUCT TEXT */
 .product-name {
-    font-size: 17px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.product-rating {
     margin-bottom: 8px;
 }
 
@@ -139,13 +143,11 @@ body {
 .original-price {
     text-decoration: line-through;
     color: gray;
-    font-size: 14px;
 }
 
 .discount {
     color: red;
     font-weight: bold;
-    font-size: 14px;
 }
 
 /* MODAL */
@@ -154,44 +156,60 @@ body {
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.45);
-    z-index: 999;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
 .modal.active {
     display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .modal-content {
-    width: 600px;
-    max-width: 90%;
     background: white;
-    padding: 30px;
-    border-radius: 12px;
+    width: 650px;
+    max-width: 90%;
+    padding: 25px;
+    border-radius: 10px;
     position: relative;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
 }
 
 .close-modal {
     position: absolute;
-    right: 18px;
-    top: 12px;
-    font-size: 28px;
+    right: 15px;
+    top: 10px;
+    font-size: 24px;
     cursor: pointer;
 }
 
 /* PRODUCT DETAIL */
+.product-detail-content {
+    display: flex;
+    gap: 20px;
+}
+
 .detail-image {
-    font-size: 90px;
-    text-align: center;
-    margin-bottom: 20px;
+    width: 250px;
+    height: 250px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.detail-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.detail-info {
+    flex: 1;
 }
 
 .detail-price {
+    font-size: 28px;
     color: #2874f0;
-    font-size: 32px;
     font-weight: bold;
+    margin: 10px 0;
 }
 
 .detail-original-price {
@@ -209,34 +227,34 @@ body {
     line-height: 1.6;
 }
 
+/* QUANTITY */
 .quantity-control {
     display: flex;
-    gap: 10px;
     margin: 15px 0;
 }
 
 .quantity-control button {
     width: 35px;
     height: 35px;
-    border: none;
-    background: #eee;
-    font-size: 18px;
+    border: 1px solid #ddd;
+    background: white;
     cursor: pointer;
 }
 
 .quantity-control input {
     width: 60px;
     text-align: center;
+    border: 1px solid #ddd;
 }
 
+/* BUTTON */
 .detail-add-to-cart {
     width: 100%;
     padding: 14px;
-    background: #ffc107;
     border: none;
-    font-weight: bold;
+    background: #ffcc00;
     font-size: 16px;
-    border-radius: 6px;
+    font-weight: bold;
     cursor: pointer;
 }
 
@@ -244,32 +262,34 @@ body {
 .cart-item {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin-bottom: 15px;
-    padding: 12px;
     border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.cart-item img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
 }
 
 .remove-btn {
     background: red;
     color: white;
     border: none;
-    padding: 10px 14px;
+    padding: 10px;
     cursor: pointer;
-    border-radius: 4px;
 }
 
 /* FOOTER */
 .footer {
     background: #172337;
     color: white;
-    margin-top: 40px;
     padding: 40px 20px;
+    margin-top: 40px;
 }
 
 .footer-container {
-    max-width: 1300px;
-    margin: auto;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 30px;
@@ -277,21 +297,28 @@ body {
 
 .footer-column h4 {
     margin-bottom: 15px;
-    font-size: 18px;
 }
 
-.footer-column p,
+.footer-column ul {
+    list-style: none;
+}
+
+.footer-column ul li {
+    margin-bottom: 8px;
+}
+
 .footer-column a {
     color: #ddd;
     text-decoration: none;
-    display: block;
-    margin-bottom: 8px;
+}
+
+.footer-column a:hover {
+    color: white;
 }
 
 .footer-bottom {
     text-align: center;
-    margin-top: 25px;
+    margin-top: 20px;
+    border-top: 1px solid #555;
     padding-top: 15px;
-    border-top: 1px solid #444;
-    color: #aaa;
 }
