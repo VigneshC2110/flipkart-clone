@@ -3,60 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flipkart Clone</title>
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
-
-    <!-- Favicon Fix -->
-    <link rel="icon" href="https://via.placeholder.com/32">
+    <title>Flipkart Clone - Online Shopping</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header class="topbar">
-    <div class="brand">
-        <div class="logo">flipkart</div>
-        <span>Explore | Shop | Save</span>
+    <!-- Header/Navigation -->
+    <header class="header">
+        <div class="navbar">
+            <div class="navbar-container">
+                <div class="logo">
+                    <h1>Flipkart</h1>
+                </div>
+                <div class="search-bar">
+                    <input type="text" class="search-input" placeholder="Search for products...">
+                    <button class="search-btn">🔍</button>
+                </div>
+                <div class="nav-icons">
+                    <div class="nav-item">
+                        <span class="icon">👤</span>
+                        <span>Account</span>
+                    </div>
+                    <div class="nav-item cart-icon">
+                        <span class="icon">🛒</span>
+                        <span>Cart</span>
+                        <span class="cart-count">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+        <div class="banner-content">
+            <h2>Welcome to Flipkart Clone</h2>
+            <p>Shop Everything Online</p>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        <!-- Sidebar/Filters -->
+        <aside class="sidebar">
+            <h3>Filters</h3>
+            
+            <div class="filter-group">
+                <h4>Categories</h4>
+                <label><input type="checkbox" class="category-filter"> Electronics</label>
+                <label><input type="checkbox" class="category-filter"> Clothing</label>
+                <label><input type="checkbox" class="category-filter"> Home & Garden</label>
+                <label><input type="checkbox" class="category-filter"> Sports</label>
+            </div>
+
+            <div class="filter-group">
+                <h4>Price Range</h4>
+                <input type="range" min="0" max="100000" class="price-filter" id="priceRange">
+                <p>Price: ₹<span id="priceValue">100000</span></p>
+            </div>
+
+            <div class="filter-group">
+                <h4>Rating</h4>
+                <label><input type="checkbox" class="rating-filter"> ⭐⭐⭐⭐⭐ 5 Star</label>
+                <label><input type="checkbox" class="rating-filter"> ⭐⭐⭐⭐ 4+ Star</label>
+                <label><input type="checkbox" class="rating-filter"> ⭐⭐⭐ 3+ Star</label>
+            </div>
+        </aside>
+
+        <!-- Products Section -->
+        <section class="products-section">
+            <div class="sort-bar">
+                <label>Sort By: 
+                    <select id="sortBy" class="sort-select">
+                        <option value="relevance">Relevance</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Top Rated</option>
+                        <option value="newest">Newest</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Product cards will be inserted here by JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Shopping Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Shopping Cart</h2>
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be inserted here -->
+            </div>
+            <div class="cart-summary">
+                <p>Subtotal: ₹<span id="subtotal">0</span></p>
+                <p>Tax: ₹<span id="tax">0</span></p>
+                <p>Shipping: ₹<span id="shipping">0</span></p>
+                <h3>Total: ₹<span id="total">0</span></h3>
+                <button class="checkout-btn">Proceed to Checkout</button>
+            </div>
+        </div>
     </div>
-    <div class="search-wrap">
-        <input id="searchInput" type="text" placeholder="Search for products, brands and more">
+
+    <!-- Product Detail Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content product-detail">
+            <span class="close-modal">&times;</span>
+            <div class="product-detail-content" id="productDetail">
+                <!-- Product details will be inserted here -->
+            </div>
+        </div>
     </div>
-    <nav class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="products.html">Products</a>
-        <a href="#">Login</a>
-    </nav>
-</header>
 
-<section class="hero">
-    <div class="hero-copy">
-        <span class="eyebrow">Big Savings, Best Deals</span>
-        <h1>Shop top electronics & fashion on Flipkart Clone</h1>
-        <p>Discover trending phones, laptops, accessories and more with exclusive offers.</p>
-        <a class="btn filled" href="products.html">Shop All Products</a>
-    </div>
-    <div class="hero-image">
-        <img src="https://via.placeholder.com/450x320?text=Flipkart+Deals" alt="Flipkart deals">
-    </div>
-</section>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>About</h4>
+                <ul>
+                    <li><a href="#">About Flipkart</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Help</h4>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping Info</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Policy</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Return Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Follow Us</h4>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Flipkart Clone. All rights reserved.</p>
+        </div>
+    </footer>
 
-<section class="category-row">
-    <div class="category-card">Mobiles</div>
-    <div class="category-card">Laptops</div>
-    <div class="category-card">Audio</div>
-    <div class="category-card">Appliances</div>
-    <div class="category-card">Fashion</div>
-</section>
-
-<section class="section-title">
-    <h2>Featured Products</h2>
-    <a class="btn outline" href="products.html">View All</a>
-</section>
-
-<section class="products" id="homeProducts"></section>
-
-<footer class="footer">© 2026 Flipkart Clone • Built with HTML, CSS & JavaScript</footer>
-
-<script src="products.js"></script>
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
