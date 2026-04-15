@@ -759,10 +759,3 @@ body {
     font-size: 18px;
     color: #666;
 }
-
-/* Responsive adjustments for non-responsive design */
-@media (max-width: 1024px) {
-    .products-grid {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    }
-}

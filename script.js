@@ -1,5 +1,5 @@
 // Sample Product Data
-const products = [
+let products = [
     {
         id: 1,
         name: "Wireless Headphones",
@@ -199,7 +199,7 @@ function setupEventListeners() {
 
 // Render Products
 function renderProducts(productsToRender) {
-    const productsGrid = document.getElementById('productsGrid');
+    let productsGrid = document.getElementById('productsGrid');
     productsGrid.innerHTML = '';
 
     if (productsToRender.length === 0) {
@@ -208,18 +208,18 @@ function renderProducts(productsToRender) {
     }
 
     productsToRender.forEach(product => {
-        const productCard = createProductCard(product);
+        let productCard = createProductCard(product);
         productsGrid.appendChild(productCard);
     });
 }
 
 // Create Product Card Element
 function createProductCard(product) {
-    const card = document.createElement('div');
+    let card = document.createElement('div');
     card.className = 'product-card';
     
-    const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
-    const isInWishlist = wishlist.some(item => item.id === product.id);
+    let discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+    let isInWishlist = wishlist.some(item => item.id === product.id);
 
     card.innerHTML = `
         <div class="product-image">${product.image}</div>
@@ -267,7 +267,7 @@ function createProductCard(product) {
 
 // Add to Cart
 function addToCart(product) {
-    const existingItem = cart.find(item => item.id === product.id);
+    let existingItem = cart.find(item => item.id === product.id);
 
     if (existingItem) {
         existingItem.quantity++;
@@ -292,7 +292,7 @@ function removeFromCart(productId) {
 
 // Update Cart Item Quantity
 function updateCartQuantity(productId, quantity) {
-    const item = cart.find(item => item.id === productId);
+    let item = cart.find(item => item.id === productId);
     if (item) {
         item.quantity = Math.max(1, quantity);
         if (item.quantity === 0) {
@@ -307,13 +307,13 @@ function updateCartQuantity(productId, quantity) {
 
 // Update Cart Count
 function updateCartCount() {
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    let totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     document.querySelector('.cart-count').textContent = totalItems;
 }
 
 // Toggle Wishlist
 function toggleWishlist(product) {
-    const index = wishlist.findIndex(item => item.id === product.id);
+    let index = wishlist.findIndex(item => item.id === product.id);
     
     if (index > -1) {
         wishlist.splice(index, 1);
@@ -326,15 +326,15 @@ function toggleWishlist(product) {
 
 // Open Cart Modal
 function openCartModal() {
-    const cartModal = document.getElementById('cartModal');
-    const cartItems = document.getElementById('cartItems');
+    let cartModal = document.getElementById('cartModal');
+    let cartItems = document.getElementById('cartItems');
     cartItems.innerHTML = '';
 
     if (cart.length === 0) {
         cartItems.innerHTML = '<div class="empty-cart-message"><p>Your cart is empty</p></div>';
     } else {
         cart.forEach(item => {
-            const cartItem = document.createElement('div');
+            let cartItem = document.createElement('div');
             cartItem.className = 'cart-item';
             cartItem.innerHTML = `
                 <div class="cart-item-image">${item.image}</div>
@@ -359,10 +359,10 @@ function openCartModal() {
 
 // Update Cart Summary
 function updateCartSummary() {
-    const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const tax = Math.round(subtotal * 0.18);
-    const shipping = subtotal > 500 ? 0 : 100;
-    const total = subtotal + tax + shipping;
+    let subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    let tax = Math.round(subtotal * 0.18);
+    let shipping = subtotal > 500 ? 0 : 100;
+    let total = subtotal + tax + shipping;
 
     document.getElementById('subtotal').textContent = subtotal;
     document.getElementById('tax').textContent = tax;
@@ -372,9 +372,9 @@ function updateCartSummary() {
 
 // Open Product Detail Modal
 function openProductDetail(product) {
-    const productModal = document.getElementById('productModal');
-    const productDetail = document.getElementById('productDetail');
-    const isInWishlist = wishlist.some(item => item.id === product.id);
+    let productModal = document.getElementById('productModal');
+    let productDetail = document.getElementById('productDetail');
+    let isInWishlist = wishlist.some(item => item.id === product.id);
 
     productDetail.innerHTML = `
         <div class="product-detail-content">
@@ -415,20 +415,20 @@ function openProductDetail(product) {
 
 // Quantity control functions
 function increaseQuantity() {
-    const input = document.getElementById('detailQuantity');
+    let input = document.getElementById('detailQuantity');
     input.value = parseInt(input.value) + 1;
 }
 
 function decreaseQuantity() {
-    const input = document.getElementById('detailQuantity');
+    let input = document.getElementById('detailQuantity');
     if (parseInt(input.value) > 1) {
         input.value = parseInt(input.value) - 1;
     }
 }
 
 function addDetailToCart(productId) {
-    const product = products.find(p => p.id === productId);
-    const quantity = parseInt(document.getElementById('detailQuantity').value);
+    let product = products.find(p => p.id === productId);
+    let quantity = parseInt(document.getElementById('detailQuantity').value);
 
     for (let i = 0; i < quantity; i++) {
         addToCart(product);
@@ -439,14 +439,14 @@ function addDetailToCart(productId) {
 }
 
 function toggleDetailWishlist(productId) {
-    const product = products.find(p => p.id === productId);
+    let product = products.find(p => p.id === productId);
     toggleWishlist(product);
     document.querySelector('.detail-wishlist').classList.toggle('active');
 }
 
 // Search Handler
 function handleSearch() {
-    const searchTerm = document.querySelector('.search-input').value.toLowerCase();
+    let searchTerm = document.querySelector('.search-input').value.toLowerCase();
     
     if (searchTerm.trim() === '') {
         filteredProducts = [...products];
@@ -462,7 +462,7 @@ function handleSearch() {
 
 // Sort Handler
 function handleSort(event) {
-    const sortValue = event.target.value;
+    let sortValue = event.target.value;
     let sortedProducts = [...filteredProducts];
 
     switch(sortValue) {
@@ -491,7 +491,7 @@ function applyFilters() {
     let filtered = [...products];
 
     // Category filter
-    const selectedCategories = Array.from(document.querySelectorAll('.category-filter:checked'))
+    let selectedCategories = Array.from(document.querySelectorAll('.category-filter:checked'))
         .map(checkbox => checkbox.parentElement.textContent.trim());
     
     if (selectedCategories.length > 0) {
@@ -499,11 +499,11 @@ function applyFilters() {
     }
 
     // Price filter
-    const maxPrice = parseInt(document.getElementById('priceRange').value);
+    let maxPrice = parseInt(document.getElementById('priceRange').value);
     filtered = filtered.filter(product => product.price <= maxPrice);
 
     // Rating filter
-    const selectedRatings = Array.from(document.querySelectorAll('.rating-filter:checked'))
+    let selectedRatings = Array.from(document.querySelectorAll('.rating-filter:checked'))
         .map((checkbox, index) => 5 - index);
     
     if (selectedRatings.length > 0) {
@@ -522,7 +522,7 @@ function saveCartToStorage() {
 }
 
 function loadCartFromStorage() {
-    const stored = localStorage.getItem('flipkart_cart');
+    let stored = localStorage.getItem('flipkart_cart');
     if (stored) {
         cart = JSON.parse(stored);
         updateCartCount();
@@ -534,7 +534,7 @@ function saveWishlistToStorage() {
 }
 
 function loadWishlistFromStorage() {
-    const stored = localStorage.getItem('flipkart_wishlist');
+    let stored = localStorage.getItem('flipkart_wishlist');
     if (stored) {
         wishlist = JSON.parse(stored);
     }
